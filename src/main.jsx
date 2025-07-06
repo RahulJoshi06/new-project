@@ -8,6 +8,6 @@ import Router from './Component/Router';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />
-    <Router />
+    
   </StrictMode>,
 )
