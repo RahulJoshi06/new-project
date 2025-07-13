@@ -1,15 +1,31 @@
 import express from 'express';
 import cors from 'cors';
 const app = express();
+import mongoose from 'mongoose';
 
 app.use(cors());
 app.use(express.json());
 
+// MongoDB से कनेक्शन
+
+mongoose.connect('mongodb://localhost:27017/RohulDataBase', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log('MongoDB से कनेक्ट हो गया'))
+.catch(err => console.log('Error:', err));
+
+const userSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  password: String
+});
+const User = mongoose.model('users', userSchema);
+
 let users = []; // ✅ Sample in-memory database
 
 // ✅ Create User (Router route)
-app.post('/Router', (req, res) => {
-  const newUser = { ...req.body, _id: Date.now().toString() };
+app.post('/Router', (req, res) => {  
   users.push(newUser);
   res.send({ message: 'Data received successfully!', user: newUser });
 });
